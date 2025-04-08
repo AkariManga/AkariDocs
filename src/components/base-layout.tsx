@@ -1,13 +1,15 @@
 "use client";
 
 import { Header } from "./header";
-import { HomeIcon } from "lucide-react";
+import { CodeIcon, HomeIcon, RocketIcon } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
     SidebarMenu,
     SidebarMenuLink,
     SidebarMenuItem,
+    SidebarSection,
+    useSidebar,
 } from "@/components/ui/sidebar";
 import { Separator } from "./ui/separator";
 
@@ -18,6 +20,17 @@ export function BaseLayout({
     children: React.ReactNode;
     gutter?: boolean;
 }) {
+    const { state: sidebarState } = useSidebar();
+    const isSidebarCollapsed = sidebarState === "collapsed";
+
+    const introductionItems = [
+        { name: "Getting Started", id: "getting-started" },
+        { name: "Features", id: "features" },
+        { name: "Settings", id: "settings" },
+    ];
+
+    const apiItems = [{ name: "API Overview", id: "api" }];
+
     return (
         <div className="flex flex-col w-full md:overflow-hidden">
             <Header />
@@ -34,7 +47,27 @@ export function BaseLayout({
                                 </SidebarMenuLink>
                             </SidebarMenuItem>
 
-                            <Separator />
+                            <SidebarSection
+                                title={"Introduction"}
+                                icon={<RocketIcon />}
+                                items={introductionItems}
+                                isSidebarCollapsed={isSidebarCollapsed}
+                                basePath="/docs"
+                                isActive={false}
+                                onNavigate={() => {}}
+                                isItemActive={() => false}
+                            />
+
+                            <SidebarSection
+                                title={"Api"}
+                                icon={<CodeIcon />}
+                                items={apiItems}
+                                isSidebarCollapsed={isSidebarCollapsed}
+                                basePath="/docs"
+                                isActive={false}
+                                onNavigate={() => {}}
+                                isItemActive={() => false}
+                            />
                         </SidebarMenu>
                     </SidebarContent>
                 </Sidebar>
