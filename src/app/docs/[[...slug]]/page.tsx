@@ -99,7 +99,7 @@ export default async function DocPage(props: DocPageProps) {
             // If index.mdx doesn't exist, try to show a default page
             console.error("Error loading index MDX file:", error);
             return (
-                <div className="container mx-auto py-4 mt-4">
+                <div className="container mx-auto p-4 mt-4">
                     <div className="flex flex-row justify-center gap-6">
                         <div className="flex-1 max-w-3xl">
                             <div className="prose prose-slate dark:prose-invert max-w-none">
@@ -142,7 +142,7 @@ interface DocFrontmatter {
 
 function renderDocPage(content: string, data: DocFrontmatter) {
     return (
-        <div className="container mx-auto py-4 mt-4">
+        <div className="container mx-auto p-4 mt-4">
             <div className="flex flex-row justify-center gap-6">
                 <div className="flex-1 max-w-3xl">
                     <div className="prose prose-slate dark:prose-invert max-w-none">
