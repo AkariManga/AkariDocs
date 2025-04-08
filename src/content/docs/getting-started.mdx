@@ -1,0 +1,135 @@
+---
+title: Getting Started with Akari
+description: Get started with Akari - a modern manga reader for enthusiasts and casual readers alike
+---
+
+Akari is a modern, feature-rich manga reader that lets you enjoy your favorite manga titles with a clean, intuitive interface. Whether you prefer using the online version or running it locally, this guide will help you get started quickly.
+
+<Tabs defaultTab="online">
+  <TabList>
+    <TabTrigger id="online">Online Usage</TabTrigger>
+    <TabTrigger id="local">Local Installation</TabTrigger>
+  </TabList>
+
+  <TabContent id="online">
+    ## Online Usage
+
+    The easiest way to start using Akari is through our hosted online version. No installation required!
+
+    ### Accessing Akari Online
+
+    <List type="ordered">
+      <ListItem>Visit the [Akari Website](https://akari-psi.vercel.app/) in your browser.</ListItem>
+      <ListItem>Browse available manga collections or search for your favorite titles.</ListItem>
+      <ListItem>Start reading immediately!</ListItem>
+    </List>
+
+    ### Account Features
+
+    <FeatureGrid>
+      <FeatureCard
+        title="Manganato Integration"
+        description="Sign in to your Manganato account to sync your reading progress and favorites."
+        icon={<UserCheck className="h-5 w-5 text-positive" />}
+      />
+      <FeatureCard
+        title="Reading History"
+        description="Keep track of what you've read and continue where you left off."
+        icon={<History className="h-5 w-5 text-positive" />}
+      />
+      <FeatureCard
+        title="Customized Experience"
+        description="Adjust reading preferences, themes, and page layouts."
+        icon={<Settings className="h-5 w-5 text-positive" />}
+      />
+    </FeatureGrid>
+
+    ### Using Your Manganato Account
+
+    If you already have a [Manganato](https://manganato.gg/) account:
+
+    <List type="ordered">
+      <ListItem>Click the account button in the bottom left corner of the Akari interface.</ListItem>
+      <ListItem>Sign in with your Manganato credentials.</ListItem>
+      <ListItem>Your bookmarks, reading history, and preferences will be synchronized.</ListItem>
+    </List>
+
+    <Callout type="info">
+      Akari securely handles your Manganato login information and only uses it to synchronize your manga data.
+    </Callout>
+
+  </TabContent>
+
+  <TabContent id="local">
+    ## Local Installation
+
+    Running Akari locally gives you additional customization options and offline capabilities.
+
+    ### Prerequisites
+
+    Before running Akari, ensure you have the following installed:
+
+    <List>
+      <ListItem>[Node.js](https://nodejs.org/) (version 16.x or later recommended)</ListItem>
+    </List>
+
+    One of the following package managers:
+    <List>
+      <ListItem>[npm](https://www.npmjs.com/) (comes with Node.js)</ListItem>
+      <ListItem>[yarn](https://yarnpkg.com/)</ListItem>
+      <ListItem>[pnpm](https://pnpm.io/)</ListItem>
+    </List>
+
+    ### Step 1: Clone the Repository
+
+    ```bash
+    git clone https://github.com/sn0w12/Akari
+    cd Akari
+    ```
+
+    ### Step 2: Install Dependencies
+
+    <PackageManagerCode npm="npm install" yarn="yarn install" pnpm="pnpm install" />
+
+    ### Step 3: Configure Environment (Optional)
+
+    Create a `.env.local` file in the project root directory if you need custom configurations:
+
+    ```bash
+    # Example .env.local file
+    NEXT_PUBLIC_API_URL=your_custom_api_url
+    NEXT_PUBLIC_ENABLE_ANALYTICS=false
+    ```
+
+    ### Step 4: Running the Development Server
+
+    Start the development server with:
+
+    <PackageManagerCode npm="npm run dev" yarn="yarn dev" pnpm="pnpm dev" />
+
+    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+    <Callout type="info" title="MyAnimeList Authentication">
+      When running locally, MyAnimeList authentication only works on specific localhost ports. Currently supported ports are: 3000, 3016, 3456, 3789, and 4000.
+
+      You can modify the port in your `package.json` scripts by adding a `-p` flag:
+
+      ```json
+      "dev": "next dev -p 3000"
+      ```
+    </Callout>
+
+    ### Step 5: Building for Production
+
+    To build the app for production deployment:
+
+    <PackageManagerCode
+      npm="npm run build\nnpm run start"
+      yarn="yarn build\nyarn start"
+      pnpm="pnpm build\npnpm start"
+    />
+
+    The production build will be available at [http://localhost:3000](http://localhost:3000) by default.
+
+  </TabContent>
+</Tabs>
