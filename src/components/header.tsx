@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SidebarTrigger, useSidebar } from "./ui/sidebar";
+import { SidebarTrigger } from "./ui/sidebar";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -17,8 +17,6 @@ import SearchButton from "./search/search-button";
 export function Header() {
     const pathname = usePathname();
     const [segments, setSegments] = useState<string[]>([]);
-    const { state: sidebarState } = useSidebar();
-    const isSidebarCollapsed = sidebarState === "collapsed";
 
     useEffect(() => {
         const pathSegments = pathname.split("/").filter(Boolean);
@@ -51,9 +49,7 @@ export function Header() {
             <div className="py-1 pr-4 md:pr-11 pl-11 mx-auto flex items-center justify-between">
                 <SidebarTrigger className="absolute left-4 md:left-2" />
                 <div
-                    className={`hidden md:block flex h-full items-center pr-2 transition-all pl-4 ${
-                        isSidebarCollapsed ? "md:pl-3" : "md:pl-2"
-                    }`}
+                    className={`hidden md:block flex h-full items-center pr-2 transition-all pl-4 md:pl-1`}
                 >
                     <Breadcrumb>
                         <BreadcrumbList>
