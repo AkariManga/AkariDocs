@@ -12,6 +12,7 @@ import {
 import { usePathname } from "next/navigation";
 import React from "react";
 import SearchBar from "./search/search-bar";
+import SearchButton from "./search/search-button";
 
 export function Header() {
     const pathname = usePathname();
@@ -89,6 +90,7 @@ export function Header() {
                 </div>
                 <div className="flex items-center flex-grow justify-end">
                     <SearchBar />
+                    <SearchButton />
                 </div>
             </div>
         </header>
