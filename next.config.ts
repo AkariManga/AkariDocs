@@ -9,8 +9,12 @@ const withMDX = createMDX({
     },
 });
 
+const basePath = "/AkariDocs";
+
 const nextConfig: NextConfig = {
     output: "export",
+    basePath,
+    assetPrefix: basePath,
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
     images: {
         remotePatterns: [
