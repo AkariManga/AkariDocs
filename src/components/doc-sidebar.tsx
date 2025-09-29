@@ -310,7 +310,7 @@ export function DocSidebar({ title }: { title: string }) {
                                 Open an issue
                             </Link>
                             <Link
-                                href="https://akari-psi.vercel.app/"
+                                href="https://akarimanga.dpdns.org/"
                                 target="_blank"
                                 rel="noopener"
                                 className="flex items-center text-sm text-positive hover:underline"

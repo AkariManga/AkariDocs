@@ -387,7 +387,7 @@ export function Home() {
                                 Get Started
                             </Link>
                             <Link
-                                href="https://akari-psi.vercel.app/"
+                                href="https://akarimanga.dpdns.org/"
                                 target="_blank"
                                 rel="noopener"
                                 className="px-6 py-3 bg-muted hover:bg-muted/80 text-muted-foreground font-medium rounded-lg transition-all border border-border"
