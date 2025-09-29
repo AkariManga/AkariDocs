@@ -46,9 +46,9 @@ export function Header() {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 md:sticky z-50 bg-sidebar border-b md:border-b-0">
-            <div className="py-1 pr-4 md:pr-11 pl-11 mx-auto flex items-center justify-between">
-                <SidebarTrigger className="absolute left-4 md:left-2" />
+        <header className="fixed top-0 left-0 right-0 md:sticky z-50 bg-sidebar border-b md:border-b-0 min-h-12 md:min-h-0">
+            <div className="py-1 pr-2 pl-11 flex items-center justify-between min-h-12 md:min-h-0">
+                <SidebarTrigger className="absolute left-2" />
                 <div
                     className={`hidden md:block flex h-full items-center pr-2 transition-all pl-4 ${
                         isSidebarCollapsed ? "md:pl-1" : "md:pl-0"

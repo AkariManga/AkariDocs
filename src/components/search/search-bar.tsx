@@ -66,7 +66,7 @@ export default function SearchBar() {
 
     return (
         <div
-            className={`relative transition-all w-auto flex-grow lg:grow-0 lg:w-96 xl:w-128 ${
+            className={`relative transition-all w-auto ml-12 md:ml-0 flex-grow lg:grow-0 lg:w-96 xl:w-128 ${
                 isFocused ? "xl:w-[40rem] lg:w-128" : ""
             }`}
         >
@@ -108,13 +108,13 @@ export default function SearchBar() {
                             setSelectedIndex(-1);
                         }
                     }}
-                    className="w-full hidden md:block h-8"
+                    className="w-full h-8"
                 />
             </div>
             {showPopup && (
                 <Card
                     ref={popupRef}
-                    className="hidden absolute p-2 z-10 mt-1 m-auto md:w-full md:block"
+                    className="absolute p-2 z-10 mt-1 m-auto md:w-full"
                 >
                     <CardContent className="p-2">
                         {searchResults.length > 0 ? (

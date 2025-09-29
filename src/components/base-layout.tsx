@@ -37,7 +37,7 @@ export function BaseLayout({
                     </SidebarContent>
                 </Sidebar>
                 <main
-                    className="bg-background flex-1 flex flex-col md:border-t md:rounded-tl-xl md:border-l md:overflow-y-auto"
+                    className="bg-background flex-1 flex flex-col md:border-t md:rounded-tl-xl md:border-l md:overflow-y-auto px-4"
                     style={{ scrollbarGutter: gutter ? "stable" : "auto" }}
                 >
                     {children}
