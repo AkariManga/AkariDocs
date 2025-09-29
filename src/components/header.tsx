@@ -51,7 +51,7 @@ export function Header() {
                 <SidebarTrigger className="absolute left-4 md:left-2" />
                 <div
                     className={`hidden md:block flex h-full items-center pr-2 transition-all pl-4 ${
-                        isSidebarCollapsed ? "md:pl-3" : "md:pl-2"
+                        isSidebarCollapsed ? "md:pl-1" : "md:pl-0"
                     }`}
                 >
                     <Breadcrumb>
