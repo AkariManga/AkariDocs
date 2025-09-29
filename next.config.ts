@@ -24,6 +24,23 @@ const nextConfig: NextConfig = {
         ],
         unoptimized: true,
     },
+    rewrites: async () => {
+        return {
+            beforeFiles: [
+                {
+                    source: "/docs/:slug",
+                    destination: "/llms/:slug",
+                    has: [
+                        {
+                            type: "header",
+                            key: "accept",
+                            value: "(.*)(text/markdown|text/plain)(.*)",
+                        },
+                    ],
+                },
+            ],
+        };
+    },
 };
 
 export default withMDX(nextConfig);
