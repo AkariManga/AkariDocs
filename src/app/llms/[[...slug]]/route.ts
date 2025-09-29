@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { NextRequest } from "next/server";
 import { getFilePath, getMdxSlugs } from "@/lib/files";
+import { DocSearchResult, clientSearchDocs } from "@/lib/search-data";
 
 export async function generateStaticParams() {
     return getMdxSlugs();
@@ -96,6 +97,19 @@ function processMarkdownContent(content: string, slug?: string[]): string {
     return content;
 }
 
+function getErrorMessage(error: unknown): string {
+    let message =
+        typeof error === "object" && error !== null && "message" in error
+            ? String((error as { message?: unknown }).message)
+            : String(error);
+
+    if (message.startsWith("ENOENT: no such file or directory")) {
+        message = "Page not found";
+    }
+
+    return message;
+}
+
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ slug?: string[] }> }
@@ -117,8 +131,10 @@ export async function GET(
                 headers: { "Content-Type": "text/plain" },
             });
         } catch (error) {
-            console.error("Error loading index MDX file:", error);
-            return Response.json({ error: "Not found" }, { status: 404 });
+            return new Response(getErrorMessage(error), {
+                status: 404,
+                headers: { "Content-Type": "text/plain" },
+            });
         }
     }
 
@@ -131,12 +147,33 @@ export async function GET(
             headers: { "Content-Type": "text/plain" },
         });
     } catch (error) {
-        console.error("Error loading MDX file:", error);
-        const errorMessage =
-            typeof error === "object" && error !== null && "message" in error
-                ? String((error as { message?: unknown }).message)
-                : String(error);
-        return new Response("# Not found\n" + errorMessage, {
+        // Try to find similar pages using search data
+        try {
+            const searchDataPath = path.join(
+                process.cwd(),
+                "public",
+                "search-data.json"
+            );
+            const searchDataContent = fs.readFileSync(searchDataPath, "utf8");
+            const searchIndex: DocSearchResult[] =
+                JSON.parse(searchDataContent);
+            const query = slug.join("/");
+            const similarPages = clientSearchDocs(query, searchIndex);
+            if (similarPages.length > 0) {
+                let response =
+                    "Page not found. Here are some similar pages:\n\n";
+                for (const page of similarPages.slice(0, 5)) {
+                    response += `- ${page.title}: ${process.env.NEXT_PUBLIC_BASE_URL}${page.url}\n`;
+                }
+                return new Response(response, {
+                    status: 404,
+                    headers: { "Content-Type": "text/plain" },
+                });
+            }
+        } catch {
+            // Ignore search errors, proceed to not found
+        }
+        return new Response(getErrorMessage(error), {
             status: 404,
             headers: { "Content-Type": "text/plain" },
         });
