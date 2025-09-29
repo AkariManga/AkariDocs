@@ -25,16 +25,5 @@ export function PackageManagerCode({
 
     const content = commands[packageManager].split("\\n").join("\n");
 
-    return (
-        <div>
-            <div className="flex items-center justify-between">
-                <div className="text-xs font-medium text-muted-foreground">
-                    Using {packageManager}
-                </div>
-            </div>
-            <Code language="bash" variant="numbered">
-                {content}
-            </Code>
-        </div>
-    );
+    return <Code language="bash">{content}</Code>;
 }

@@ -193,8 +193,13 @@ const components = {
             : children;
 
         if (isCodeBlock) {
+            const isNumbered = /numbered/.test(className || "");
             return (
-                <Code language={match[1]} variant="numbered" {...props}>
+                <Code
+                    language={match[1]}
+                    variant={isNumbered ? "numbered" : "default"}
+                    {...props}
+                >
                     {trimmedChildren}
                 </Code>
             );
