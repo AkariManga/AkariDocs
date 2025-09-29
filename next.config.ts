@@ -28,8 +28,8 @@ const nextConfig: NextConfig = {
         return {
             beforeFiles: [
                 {
-                    source: "/:slug",
-                    destination: "/llms/:slug",
+                    source: "/:slug*",
+                    destination: "/llms/:slug*",
                     has: [
                         {
                             type: "header",
