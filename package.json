@@ -8,7 +8,7 @@
         "start": "next start",
         "serve": "npx serve@latest out",
         "lint": "next lint",
-        "generate-search": "node scripts/generate-search-data.js"
+        "generate-search": "node scripts/generate-search-data.mjs"
     },
     "dependencies": {
         "@mdx-js/loader": "^3.1.1",
