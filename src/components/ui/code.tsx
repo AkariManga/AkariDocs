@@ -6,6 +6,14 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Copy, Check } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { cn } from "@/lib/utils";
+import {
+    Tooltip,
+    TooltipTrigger,
+    TooltipContent,
+    TooltipProvider,
+} from "@/components/ui/tooltip";
+
 import Prism from "prismjs";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-tsx";
@@ -16,8 +24,6 @@ import "prismjs/components/prism-json";
 import "prismjs/components/prism-markdown";
 import "prismjs/components/prism-bash";
 import "prismjs/themes/prism-tomorrow.css";
-
-import { cn } from "@/lib/utils";
 
 function CopyButton({ children }: { children: React.ReactNode }) {
     const [isCopied, setIsCopied] = React.useState(false);
@@ -31,18 +37,25 @@ function CopyButton({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <Button
-            variant="secondary"
-            size="icon"
-            className="text-muted-foreground bg-muted hover:bg-muted hover:text-primary absolute top-1.5 right-1 z-30 h-6 w-6 opacity-0 transition-[color,opacity] duration-200 group-hover:opacity-100 hover:opacity-100"
-            onClick={handleCopy}
-        >
-            {isCopied ? (
-                <Check className="h-4 w-4" />
-            ) : (
-                <Copy className="h-4 w-4" />
-            )}
-        </Button>
+        <TooltipProvider>
+            <Tooltip open={isCopied}>
+                <TooltipTrigger asChild>
+                    <Button
+                        variant="secondary"
+                        size="icon"
+                        className="text-muted-foreground bg-muted hover:bg-muted hover:text-primary absolute top-1.5 right-1 z-30 h-6 w-6 opacity-0 transition-[color,opacity] duration-200 group-hover:opacity-100 hover:opacity-100"
+                        onClick={handleCopy}
+                    >
+                        {isCopied ? (
+                            <Check className="h-4 w-4" />
+                        ) : (
+                            <Copy className="h-4 w-4" />
+                        )}
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>Copied</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
     );
 }
 
@@ -66,7 +79,7 @@ interface CodeProps
     startLine?: number;
     maxLines?: number;
     highlightLines?: number[];
-    language?: string; // Added language prop
+    language?: string;
 }
 
 function InlineCode({
@@ -91,7 +104,7 @@ function Code({
     startLine = 1,
     maxLines,
     highlightLines = [],
-    language = "typescript", // Default to typescript
+    language = "typescript",
     ...props
 }: CodeProps) {
     const codeRef = React.useRef<HTMLElement>(null);
