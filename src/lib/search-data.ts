@@ -58,5 +58,9 @@ export function clientSearchDocs(
             if (!aInTitle && bInTitle) return 1;
             return 0;
         })
-        .slice(0, 10); // Limit to 10 results
+        .slice(0, 10)
+        .map((doc) => ({
+            ...doc,
+            url: doc.url.replace("/index", ""),
+        }));
 }
