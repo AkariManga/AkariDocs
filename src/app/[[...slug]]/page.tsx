@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import fs from "fs";
-import path from "path";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import mdxComponents from "@/components/mdx-components";
 import matter from "gray-matter";
@@ -9,8 +8,8 @@ import { DocSidebar } from "@/components/doc-sidebar";
 import { DocHeader } from "@/components/doc-header";
 import remarkGfm from "remark-gfm";
 import { Home } from "@/components/home";
+import { getFilePath, getMdxSlugs } from "@/lib/files";
 
-// Update interface to make params and searchParams Promises
 interface DocPageProps {
     params: Promise<{
         slug?: string[];
@@ -19,49 +18,16 @@ interface DocPageProps {
 }
 
 export async function generateStaticParams() {
-    const docsDirectory = path.join(process.cwd(), "src/content/docs");
-
-    // Function to recursively get all MDX files
-    const getMdxFiles = (
-        dir: string,
-        basePath: string = ""
-    ): { slug: string[] }[] => {
-        const files = fs.readdirSync(dir);
-
-        return files.flatMap((file) => {
-            const filePath = path.join(dir, file);
-            const stats = fs.statSync(filePath);
-
-            if (stats.isDirectory()) {
-                return getMdxFiles(filePath, path.join(basePath, file));
-            }
-
-            if (path.extname(file) === ".mdx") {
-                const slug = path
-                    .join(basePath, file.replace(/\.mdx$/, ""))
-                    .split(path.sep);
-                return [{ slug }];
-            }
-
-            return [];
-        });
-    };
-
-    return getMdxFiles(docsDirectory);
+    return getMdxSlugs();
 }
 
 export async function generateMetadata(props: DocPageProps): Promise<Metadata> {
     // Await the params Promise
     const params = await props.params;
     const slug = params.slug || [];
-    const url = slug.join("/");
 
     try {
-        const filePath = path.join(
-            process.cwd(),
-            "src/content/docs",
-            `${url}.mdx`
-        );
+        const filePath = getFilePath(slug);
         const fileContent = fs.readFileSync(filePath, "utf8");
 
         // Use gray-matter to parse frontmatter
@@ -111,14 +77,8 @@ export default async function DocPage(props: DocPageProps) {
         }
     }
 
-    const url = slug.join("/");
-
     try {
-        const filePath = path.join(
-            process.cwd(),
-            "src/content/docs",
-            `${url}.mdx`
-        );
+        const filePath = getFilePath(slug);
         const fileContent = fs.readFileSync(filePath, "utf8");
 
         const { content, data } = matter(fileContent);

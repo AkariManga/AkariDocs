@@ -1,36 +1,10 @@
 import fs from "fs";
 import path from "path";
 import { NextRequest } from "next/server";
+import { getFilePath, getMdxSlugs } from "@/lib/files";
 
 export async function generateStaticParams() {
-    const docsDirectory = path.join(process.cwd(), "src/content/docs");
-
-    const getMdxFiles = (
-        dir: string,
-        basePath: string = ""
-    ): { slug: string[] }[] => {
-        const files = fs.readdirSync(dir);
-
-        return files.flatMap((file) => {
-            const filePath = path.join(dir, file);
-            const stats = fs.statSync(filePath);
-
-            if (stats.isDirectory()) {
-                return getMdxFiles(filePath, path.join(basePath, file));
-            }
-
-            if (path.extname(file) === ".mdx") {
-                const slug = path
-                    .join(basePath, file.replace(/\.mdx$/, ""))
-                    .split(path.sep);
-                return [{ slug }];
-            }
-
-            return [];
-        });
-    };
-
-    return getMdxFiles(docsDirectory);
+    return getMdxSlugs();
 }
 
 function transformPackageManagerCode(content: string): string {
@@ -126,14 +100,8 @@ export async function GET(
         }
     }
 
-    const url = slug.join("/");
-
     try {
-        const filePath = path.join(
-            process.cwd(),
-            "src/content/docs",
-            `${url}.mdx`
-        );
+        const filePath = getFilePath(slug);
         const fileContent = fs.readFileSync(filePath, "utf8");
 
         return new Response(processMarkdownContent(fileContent), {
@@ -142,6 +110,13 @@ export async function GET(
         });
     } catch (error) {
         console.error("Error loading MDX file:", error);
-        return Response.json({ error: "Not found" }, { status: 404 });
+        const errorMessage =
+            typeof error === "object" && error !== null && "message" in error
+                ? String((error as { message?: unknown }).message)
+                : String(error);
+        return new Response("# Not found\n" + errorMessage, {
+            status: 404,
+            headers: { "Content-Type": "text/plain" },
+        });
     }
 }
