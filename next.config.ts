@@ -12,17 +12,8 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-    images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "github.com",
-                port: "",
-                pathname: "/sn0w12/Akari/raw/dev/images/**",
-                search: "",
-            },
-        ],
-        unoptimized: true,
+    experimental: {
+        reactCompiler: true,
     },
     rewrites: async () => {
         return {
