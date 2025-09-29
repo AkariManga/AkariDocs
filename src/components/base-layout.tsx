@@ -33,8 +33,6 @@ export function BaseLayout({
                                     <span>Home</span>
                                 </SidebarMenuLink>
                             </SidebarMenuItem>
-
-                            <Separator />
                         </SidebarMenu>
                     </SidebarContent>
                 </Sidebar>
