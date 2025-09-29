@@ -68,7 +68,29 @@ function transformTabs(content: string): string {
     });
 }
 
-function processMarkdownContent(content: string): string {
+function transformFrontmatter(content: string, slug?: string[]): string {
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---\n/;
+    return content.replace(frontmatterRegex, (match, fm) => {
+        const lines = fm.split("\n");
+        let title = "";
+        for (const line of lines) {
+            if (line.startsWith("title:")) {
+                title = line.replace("title:", "").trim();
+                break;
+            }
+        }
+        if (title) {
+            return `# ${title} - ${
+                process.env.NEXT_PUBLIC_BASE_URL
+            }/${slug?.join("/")}\n`;
+        }
+        return "";
+    });
+}
+
+function processMarkdownContent(content: string, slug?: string[]): string {
+    content = content.replace(/\r\n/g, "\n");
+    content = transformFrontmatter(content, slug);
     content = transformPackageManagerCode(content);
     content = transformTabs(content);
     return content;
@@ -104,7 +126,7 @@ export async function GET(
         const filePath = getFilePath(slug);
         const fileContent = fs.readFileSync(filePath, "utf8");
 
-        return new Response(processMarkdownContent(fileContent), {
+        return new Response(processMarkdownContent(fileContent, slug), {
             status: 200,
             headers: { "Content-Type": "text/plain" },
         });
