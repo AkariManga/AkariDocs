@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { BaseLayout } from "@/components/base-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PackageManagerProvider } from "@/components/package-manager/package-manager-context";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const jetBrainsMono = JetBrains_Mono({
+    variable: "--font-jetbrains-mono",
     subsets: ["latin"],
 });
 
@@ -29,7 +24,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} h-dvh flex flex-col antialiased bg-background overflow-y-auto`}
+                className={`${jetBrainsMono.className} h-dvh flex flex-col antialiased bg-background overflow-y-auto`}
             >
                 <SidebarProvider defaultOpen={false}>
                     <PackageManagerProvider>
