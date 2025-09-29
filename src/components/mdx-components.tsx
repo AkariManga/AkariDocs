@@ -15,7 +15,6 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableCaption,
 } from "@/components/ui/table";
 import { PackageManagerSelector } from "@/components/package-manager/package-manager-selector";
 import { PackageManagerCode } from "@/components/package-manager/package-manager-code";
@@ -217,14 +216,6 @@ const components = {
         );
     },
     // Custom components
-    Table,
-    TableHeader,
-    TableBody,
-    TableFooter,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableCaption,
     Tabs,
     TabList,
     TabTrigger,
