@@ -1,7 +1,8 @@
 import Link from "next/link";
+import pkg from "../../package.json";
 
 export function Home() {
-    const version = "0.1.0";
+    const version = pkg.version;
 
     return (
         <div className="min-h-screen bg-background">
