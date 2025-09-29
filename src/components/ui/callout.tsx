@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from "lucide-react";
 
-type CalloutType = "info" | "warning" | "error" | "success";
+export type CalloutType = "info" | "warning" | "error" | "success";
 
 interface CalloutProps {
     type?: CalloutType;

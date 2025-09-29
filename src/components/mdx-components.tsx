@@ -15,7 +15,6 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableCaption,
 } from "@/components/ui/table";
 import { PackageManagerSelector } from "@/components/package-manager/package-manager-selector";
 import { PackageManagerCode } from "@/components/package-manager/package-manager-code";
@@ -40,15 +39,6 @@ interface MDXComponentProps {
     height?: number;
     href?: string;
 }
-
-const OfficialBadge = () => (
-    <span
-        className="ml-1 inline-flex items-center px-1.5 py-0.5 rounded-md text-xs font-medium bg-primary/10 text-primary border border-primary/20"
-        title="Only available on the official website"
-    >
-        Official
-    </span>
-);
 
 const components = {
     ...Object.entries(LucideIcons).reduce(
@@ -126,20 +116,20 @@ const components = {
             {...props}
         />
     ),
-    ul: ({ className, ...props }: MDXComponentProps) => (
-        <ul
-            className={`my-6 ml-6 list-disc [&>li]:mt-2 ${className || ""}`}
-            {...props}
-        />
+    ul: ({ className, children, ...props }: MDXComponentProps) => (
+        <List variant="bullet" className={className} {...props}>
+            {children}
+        </List>
     ),
-    ol: ({ className, ...props }: MDXComponentProps) => (
-        <ol
-            className={`my-6 ml-6 list-decimal [&>li]:mt-2 ${className || ""}`}
-            {...props}
-        />
+    ol: ({ className, children, ...props }: MDXComponentProps) => (
+        <List variant="numbered" className={className} {...props}>
+            {children}
+        </List>
     ),
-    li: ({ className, ...props }: MDXComponentProps) => (
-        <li className={`${className || ""}`} {...props} />
+    li: ({ className, children, ...props }: MDXComponentProps) => (
+        <ListItem className={className} {...props}>
+            {children}
+        </ListItem>
     ),
     blockquote: ({ className, ...props }: MDXComponentProps) => (
         <blockquote
@@ -217,14 +207,6 @@ const components = {
         );
     },
     // Custom components
-    Table,
-    TableHeader,
-    TableBody,
-    TableFooter,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableCaption,
     Tabs,
     TabList,
     TabTrigger,
@@ -235,9 +217,6 @@ const components = {
     FeatureGrid,
     PackageManagerSelector,
     PackageManagerCode,
-    List,
-    ListItem,
-    OfficialBadge,
 };
 
 export default components;

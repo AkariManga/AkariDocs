@@ -17,44 +17,15 @@ This page provides an overview of available API endpoints in Akari's platform. A
 
     Access manga content, search for titles, and browse collections.
 
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Endpoint</TableHead>
-          <TableHead>Description</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>`GET /manga/[id]`</TableCell>
-          <TableCell>Get manga details by ID</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`GET /manga/[id]/[subId]`</TableCell>
-          <TableCell>Get specific chapter/volume</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`GET /manga-list/latest`</TableCell>
-          <TableCell>List recently updated manga</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`GET /manga-list/popular`</TableCell>
-          <TableCell>List popular manga</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`GET /author/[id]`</TableCell>
-          <TableCell>List manga by author</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`GET /genre/[id]`</TableCell>
-          <TableCell>Browse manga by genre</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`GET /search/simple`</TableCell>
-          <TableCell>Search for manga titles</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+    | Endpoint | Description |
+    |----------|-------------|
+    | `GET /manga/[id]` | Get manga details by ID |
+    | `GET /manga/[id]/[subId]` | Get specific chapter/volume |
+    | `GET /manga-list/latest` | List recently updated manga |
+    | `GET /manga-list/popular` | List popular manga |
+    | `GET /author/[id]` | List manga by author |
+    | `GET /genre/[id]` | Browse manga by genre |
+    | `GET /search/simple` | Search for manga titles |
 
   </TabContent>
 
@@ -63,77 +34,20 @@ This page provides an overview of available API endpoints in Akari's platform. A
 
     Manage user accounts, reading history, and bookmarks.
 
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Endpoint</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead>Description</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>`/account/reading/history`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get reading history</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/account/reading/stats`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get reading statistics</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/bookmarks`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>List all bookmarks</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/bookmarks/add`</TableCell>
-          <TableCell>POST</TableCell>
-          <TableCell>Add a bookmark</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/bookmarks/delete`</TableCell>
-          <TableCell>DELETE</TableCell>
-          <TableCell>Remove a bookmark</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/bookmarks/isbookmarked`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Check bookmark status</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/bookmarks/notification`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get bookmark notifications</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/bookmarks/update`</TableCell>
-          <TableCell>PUT</TableCell>
-          <TableCell>Update a bookmark</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/login`</TableCell>
-          <TableCell>GET/POST</TableCell>
-          <TableCell>Authenticate user</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/logout`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>End user session</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/logout/mal`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>End MAL session</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/register`</TableCell>
-          <TableCell>GET/POST</TableCell>
-          <TableCell>Create new account</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+    | Endpoint | Method | Description |
+    |----------|--------|-------------|
+    | `/account/reading/history` | GET | Get reading history |
+    | `/account/reading/stats` | GET | Get reading statistics |
+    | `/bookmarks` | GET | List all bookmarks |
+    | `/bookmarks/add` | POST | Add a bookmark |
+    | `/bookmarks/delete` | DELETE | Remove a bookmark |
+    | `/bookmarks/isbookmarked` | GET | Check bookmark status |
+    | `/bookmarks/notification` | GET | Get bookmark notifications |
+    | `/bookmarks/update` | PUT | Update a bookmark |
+    | `/login` | GET/POST | Authenticate user |
+    | `/logout` | GET | End user session |
+    | `/logout/mal` | GET | End MAL session |
+    | `/register` | GET/POST | Create new account |
 
   </TabContent>
 
@@ -142,77 +56,20 @@ This page provides an overview of available API endpoints in Akari's platform. A
 
     Integrate with MyAnimeList for tracking and synchronization.
 
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Endpoint</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead>Description</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>`/manga/malsync/get`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get MAL sync info</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/auth/token/get`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get MAL auth token</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/auth/token/refresh`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Refresh MAL token</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/auth/token`</TableCell>
-          <TableCell>POST</TableCell>
-          <TableCell>Submit auth token</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/[id]`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get manga from MAL</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/check-vote`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Check manga rating</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/isLoggedIn`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Check MAL login status</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/me`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get MAL user info</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/me/mangalist`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Get user's MAL list</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/report`</TableCell>
-          <TableCell>POST</TableCell>
-          <TableCell>Submit report to MAL</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/search`</TableCell>
-          <TableCell>GET</TableCell>
-          <TableCell>Search MAL manga</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell>`/mal/vote`</TableCell>
-          <TableCell>POST</TableCell>
-          <TableCell>Rate a manga</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+    | Endpoint | Method | Description |
+    |----------|--------|-------------|
+    | `/manga/malsync/get` | GET | Get MAL sync info |
+    | `/auth/token/get` | GET | Get MAL auth token |
+    | `/auth/token/refresh` | GET | Refresh MAL token |
+    | `/auth/token` | POST | Submit auth token |
+    | `/mal/[id]` | GET | Get manga from MAL |
+    | `/mal/check-vote` | GET | Check manga rating |
+    | `/mal/isLoggedIn` | GET | Check MAL login status |
+    | `/mal/me` | GET | Get MAL user info |
+    | `/mal/me/mangalist` | GET | Get user's MAL list |
+    | `/mal/report` | POST | Submit report to MAL |
+    | `/mal/search` | GET | Search MAL manga |
+    | `/mal/vote` | POST | Rate a manga |
 
   </TabContent>
 </Tabs>

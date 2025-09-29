@@ -15,6 +15,7 @@ interface ListItemProps {
     icon?: ReactNode;
     className?: string;
     variant?: ListVariant;
+    index?: number;
 }
 
 export function List({ children, variant = "bullet", className }: ListProps) {
@@ -28,6 +29,7 @@ export function List({ children, variant = "bullet", className }: ListProps) {
         none: "list-none",
     };
 
+    let counter = 0;
     return (
         <Component
             className={cn(
@@ -38,8 +40,10 @@ export function List({ children, variant = "bullet", className }: ListProps) {
         >
             {React.Children.map(children, (child) => {
                 if (React.isValidElement<ListItemProps>(child)) {
+                    counter++;
                     return React.cloneElement(child, {
                         variant: child.props.icon ? undefined : variant,
+                        index: variant === "numbered" ? counter : undefined,
                     });
                 }
                 return child;
@@ -47,11 +51,13 @@ export function List({ children, variant = "bullet", className }: ListProps) {
         </Component>
     );
 }
+
 export function ListItem({
     children,
     icon,
     className,
     variant,
+    index,
 }: ListItemProps) {
     let itemIcon = icon;
     if (!itemIcon && variant) {
@@ -73,7 +79,7 @@ export function ListItem({
                 <LucideIcons.Circle className="h-2 w-2 text-foreground mr-2 flex-shrink-0 fill-current" />
             );
         } else if (variant === "numbered") {
-            itemIcon = null;
+            itemIcon = <span className="mr-2 flex-shrink-0">{index}.</span>;
         }
     }
 

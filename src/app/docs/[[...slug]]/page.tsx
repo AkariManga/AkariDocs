@@ -7,6 +7,7 @@ import mdxComponents from "@/components/mdx-components";
 import matter from "gray-matter";
 import { DocSidebar } from "@/components/doc-sidebar";
 import { DocHeader } from "@/components/doc-header";
+import remarkGfm from "remark-gfm";
 
 // Update interface to make params and searchParams Promises
 interface DocPageProps {
@@ -154,7 +155,7 @@ function renderDocPage(content: string, data: DocFrontmatter) {
                                 mdxOptions: {
                                     development:
                                         process.env.NODE_ENV === "development",
-                                    remarkPlugins: [],
+                                    remarkPlugins: [remarkGfm],
                                     rehypePlugins: [],
                                 },
                             }}
