@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { clientSearchDocs, DocSearchResult } from "@/lib/search-data";
@@ -12,8 +13,10 @@ export default function SearchBar() {
     const [searchResults, setSearchResults] = useState<DocSearchResult[]>([]);
     const [isFocused, setIsFocused] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
     const popupRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const router = useRouter();
 
     const handleSearchInputChange = (e: { target: { value: string } }) => {
         const query = e.target.value;
@@ -25,8 +28,10 @@ export default function SearchBar() {
                 searchData as DocSearchResult[]
             );
             setSearchResults(results);
+            setSelectedIndex(results.length > 0 ? 0 : -1);
         } else {
             setSearchResults([]);
+            setSelectedIndex(-1);
         }
     };
 
@@ -37,6 +42,7 @@ export default function SearchBar() {
             !popupRef.current.contains(e.relatedTarget as Node)
         ) {
             setShowPopup(false);
+            setSelectedIndex(-1);
         }
     };
 
@@ -48,6 +54,7 @@ export default function SearchBar() {
                 !popupRef.current.contains(event.target as Node)
             ) {
                 setShowPopup(false);
+                setSelectedIndex(-1);
             }
         };
 
@@ -75,6 +82,32 @@ export default function SearchBar() {
                         setIsFocused(true);
                         setShowPopup(true);
                     }}
+                    onKeyDown={(e) => {
+                        if (!showPopup || searchResults.length === 0) return;
+                        if (e.key === "ArrowDown") {
+                            e.preventDefault();
+                            setSelectedIndex((prev) =>
+                                prev < searchResults.length - 1 ? prev + 1 : 0
+                            );
+                        } else if (e.key === "ArrowUp") {
+                            e.preventDefault();
+                            setSelectedIndex((prev) =>
+                                prev > 0 ? prev - 1 : searchResults.length - 1
+                            );
+                        } else if (e.key === "Enter") {
+                            e.preventDefault();
+                            if (selectedIndex >= 0) {
+                                router.push(searchResults[selectedIndex].url);
+                                setShowPopup(false);
+                                setSelectedIndex(-1);
+                                inputRef.current?.blur();
+                            }
+                        } else if (e.key === "Escape") {
+                            e.preventDefault();
+                            setShowPopup(false);
+                            setSelectedIndex(-1);
+                        }
+                    }}
                     className="w-full hidden md:block h-8"
                 />
             </div>
@@ -86,12 +119,16 @@ export default function SearchBar() {
                     <CardContent className="p-2">
                         {searchResults.length > 0 ? (
                             <>
-                                {searchResults.map((result) => (
+                                {searchResults.map((result, index) => (
                                     <Link
                                         href={result.url}
                                         key={result.url}
                                         onClick={() => setShowPopup(false)}
-                                        className="block p-3 hover:bg-accent rounded-lg"
+                                        className={`block p-3 rounded-lg ${
+                                            selectedIndex === index
+                                                ? "bg-accent"
+                                                : "hover:bg-accent"
+                                        }`}
                                         prefetch={true}
                                     >
                                         <div className="font-medium">
