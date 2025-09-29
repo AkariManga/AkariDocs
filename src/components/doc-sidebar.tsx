@@ -316,7 +316,7 @@ export function DocSidebar({ title }: { title: string }) {
                                 className="flex items-center text-sm text-positive hover:underline"
                             >
                                 <Globe className="h-3.5 w-3.5 mr-1.5" />
-                                Visit Akari App
+                                Visit Akari
                             </Link>
                         </div>
                     </div>
