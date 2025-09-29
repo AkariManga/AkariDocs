@@ -8,6 +8,7 @@ import matter from "gray-matter";
 import { DocSidebar } from "@/components/doc-sidebar";
 import { DocHeader } from "@/components/doc-header";
 import remarkGfm from "remark-gfm";
+import { Home } from "@/components/home";
 
 // Update interface to make params and searchParams Promises
 interface DocPageProps {
@@ -87,15 +88,7 @@ export default async function DocPage(props: DocPageProps) {
     // Handle root/index case
     if (slug.length === 0) {
         try {
-            const filePath = path.join(
-                process.cwd(),
-                "src/content/docs",
-                "index.mdx"
-            );
-            const fileContent = fs.readFileSync(filePath, "utf8");
-            const { content, data } = matter(fileContent);
-
-            return renderDocPage(content, data as DocFrontmatter);
+            return <Home />;
         } catch (error) {
             // If index.mdx doesn't exist, try to show a default page
             console.error("Error loading index MDX file:", error);

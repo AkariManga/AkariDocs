@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Home() {
+export function Home() {
     const version = "0.1.0";
 
     return (
@@ -47,7 +47,7 @@ export default function Home() {
 
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link
-                            href="/docs/getting-started"
+                            href="/getting-started"
                             className="px-7 py-3 bg-positive hover:bg-opacity-90 text-primary-foreground font-medium rounded-lg transition-all"
                         >
                             Get Started
@@ -99,7 +99,7 @@ export default function Home() {
 
                             <div className="mt-10">
                                 <Link
-                                    href="/docs/features"
+                                    href="/features"
                                     className="inline-flex items-center text-positive hover:underline font-medium"
                                 >
                                     View all features
@@ -256,7 +256,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {/* Doc Section 1 */}
                         <Link
-                            href="/docs/getting-started"
+                            href="/getting-started"
                             className="group block bg-background"
                         >
                             <div className="border border-border rounded-xl p-6 hover:bg-positive/5 transition-all hover:border-positive h-full">
@@ -292,7 +292,7 @@ export default function Home() {
 
                         {/* Doc Section 2 */}
                         <Link
-                            href="/docs/features"
+                            href="/features"
                             className="group block bg-background"
                         >
                             <div className="border border-border rounded-xl p-6 hover:bg-positive/5 transition-all hover:border-positive h-full">
@@ -328,7 +328,7 @@ export default function Home() {
 
                         {/* Doc Section 3 */}
                         <Link
-                            href="/docs/settings"
+                            href="/settings"
                             className="group block bg-background"
                         >
                             <div className="border border-border rounded-xl p-6 hover:bg-positive/5 transition-all hover:border-positive h-full">
@@ -380,7 +380,7 @@ export default function Home() {
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link
-                                href="/docs/getting-started"
+                                href="/getting-started"
                                 className="px-6 py-3 bg-positive hover:bg-opacity-90 text-primary-foreground font-medium rounded-lg transition-all"
                             >
                                 Get Started

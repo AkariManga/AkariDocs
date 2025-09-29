@@ -63,7 +63,7 @@ function getAllDocs() {
                     {
                         title: data.title || url,
                         description: data.description || "",
-                        url: `/docs/${url}`,
+                        url: `/${url}`,
                         content: cleanedContent,
                         excerpt,
                     },

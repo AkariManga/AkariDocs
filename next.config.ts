@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
         return {
             beforeFiles: [
                 {
-                    source: "/docs/:slug",
+                    source: "/:slug",
                     destination: "/llms/:slug",
                     has: [
                         {
