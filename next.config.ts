@@ -29,6 +29,10 @@ const nextConfig: NextConfig = {
                         },
                     ],
                 },
+                {
+                    source: "/api/latest/:path*",
+                    destination: "/api/v1/:path*",
+                },
             ],
         };
     },
