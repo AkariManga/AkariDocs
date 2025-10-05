@@ -159,7 +159,14 @@ async function generateSearchData() {
             const keys = Object.keys(node).sort();
             keys.forEach((key, index) => {
                 const isLast = index === keys.length - 1;
-                const branch = isLast ? "└" : "├";
+                let branch;
+                if (index === 0) {
+                    branch = "┌";
+                } else if (isLast) {
+                    branch = "└";
+                } else {
+                    branch = "├";
+                }
                 const newPrefix = prefix + (isLast ? "    " : "│   ");
                 if (node[key].doc) {
                     const doc = node[key].doc;
