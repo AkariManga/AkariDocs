@@ -2,6 +2,9 @@
     "name": "akari-docs",
     "version": "0.1.0",
     "private": true,
+    "engines": {
+        "node": ">=20"
+    },
     "scripts": {
         "dev": "next dev",
         "build": "npm run generate-search && next build",
