@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -23,6 +24,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
+            <head>
+                <link
+                    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
+                    rel="stylesheet"
+                />
+            </head>
             <body
                 className={`${jetBrainsMono.className} h-dvh flex flex-col antialiased bg-background overflow-y-auto`}
             >

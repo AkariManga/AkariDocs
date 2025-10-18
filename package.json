@@ -7,7 +7,6 @@
     },
     "scripts": {
         "dev": "next dev",
-        "prebuild": "npm rebuild lightningcss --update-binary",
         "build": "npm run generate-search && next build",
         "start": "next start",
         "serve": "npx serve@latest out",
