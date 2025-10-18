@@ -1,10 +1,15 @@
-/* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata } from "next";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { BaseLayout } from "@/components/base-layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PackageManagerProvider } from "@/components/package-manager/package-manager-context";
+
+const jetBrainsMono = JetBrains_Mono({
+    variable: "--font-jetbrains-mono",
+    subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -18,14 +23,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <head>
-                <link
-                    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"
-                    rel="stylesheet"
-                />
-            </head>
             <body
-                className={`h-dvh flex flex-col antialiased bg-background overflow-y-auto`}
+                className={`${jetBrainsMono.className} h-dvh flex flex-col antialiased bg-background overflow-y-auto`}
             >
                 <SidebarProvider defaultOpen={false}>
                     <PackageManagerProvider>
