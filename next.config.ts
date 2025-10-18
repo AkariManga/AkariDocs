@@ -12,7 +12,6 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-    optimizeFonts: false,
     experimental: {
         reactCompiler: true,
     },
