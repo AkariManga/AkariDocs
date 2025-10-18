@@ -1,0 +1,267 @@
+---
+title: Manga API Reference
+description: Detailed documentation for Akari's manga-related API endpoints
+---
+
+## GET /manga/[id]
+
+Get manga details by ID
+
+### Response
+
+```typescript
+{
+    mangaId: string | null;
+    identifier: string;
+    imageUrl: string;
+    name: string;
+    alternativeNames: string[];
+    authors: string[];
+    status: string;
+    updated: string;
+    view: string;
+    score: number;
+    genres: string[];
+    description: string;
+    chapterList: MangaChapter[];
+    malData: null | {
+        id: string;
+        created_at: string;
+        updated_at: string;
+        image: string;
+        description: string | null;
+        score: number | null;
+        mal_id: number;
+        ani_id: number | null;
+        type: MangaType;
+    };
+}
+```
+
+## GET /manga/[id]/[subId]
+
+Get a manga chapter by its sub ID
+
+### Response
+
+```typescript
+{
+    id: string;
+    title: string;
+    chapter: string;
+    number: string;
+    chapters: { value: string; label: string }[];
+    pages: number;
+    parentId: string;
+    nextChapter: string;
+    lastChapter: string;
+    images: string[];
+    mangaId: string | null;
+    chapterId: string | null;
+    type: "Manga" | "Manhwa" | "Manhua" | null;
+    malId: number | null;
+    malImage: string | null;
+}
+```
+
+## GET /manga/[id]/og
+
+Get manga open graph image
+
+### Response
+
+PNG image
+
+<img
+    src="/examples/manga-og.webp"
+    alt="Example manga OG image"
+    width={1200}
+    height={630}
+/>
+
+## GET /manga/list/latest
+
+List recently updated manga
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                 |
+| --------- | ------ | -------- | ------------------------------------------- |
+| `page`    | number | No       | The page number for pagination (default: 1) |
+
+### Response
+
+```typescript
+{
+    mangaList: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+        description: string;
+        views: string;
+    }>;
+    popular: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+    }>;
+    metaData: {
+        totalStories: number;
+        totalPages: number;
+    }
+}
+```
+
+## GET /manga/list/popular
+
+List popular manga
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                 |
+| --------- | ------ | -------- | ------------------------------------------- |
+| `page`    | number | No       | The page number for pagination (default: 1) |
+
+### Response
+
+```typescript
+{
+    mangaList: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+        description: string;
+        views: string;
+    }>;
+    popular: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+    }>;
+    metaData: {
+        totalStories: number;
+        totalPages: number;
+    }
+}
+```
+
+## GET /author/[id]
+
+List manga by author
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                 |
+| --------- | ------ | -------- | ------------------------------------------- |
+| `page`    | number | No       | The page number for pagination (default: 1) |
+
+### Response
+
+```typescript
+{
+    mangaList: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+        description: string;
+        views: string;
+    }>;
+    popular: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+    }>;
+    metaData: {
+        totalStories: number;
+        totalPages: number;
+    }
+}
+```
+
+## GET /author/[id]/og
+
+Get author open graph image
+
+### Response
+
+PNG image
+
+<img
+    src="/examples/author-og.webp"
+    alt="Example author OG image"
+    width={1200}
+    height={630}
+/>
+
+## GET /genre/[id]
+
+Get manga by genre
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                 |
+| --------- | ------ | -------- | ------------------------------------------- |
+| `page`    | number | No       | The page number for pagination (default: 1) |
+
+### Response
+
+```typescript
+{
+    mangaList: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+        description: string;
+        views: string;
+    }>;
+    popular: Array<{
+        id: string;
+        image: string;
+        title: string;
+        chapter: string;
+        chapterUrl: string;
+    }>;
+    metaData: {
+        totalStories: number;
+        totalPages: number;
+    }
+}
+```
+
+## GET /search
+
+### Query Parameters
+
+| Parameter | Type   | Required | Description                                 |
+| --------- | ------ | -------- | ------------------------------------------- |
+| `q`       | string | Yes      | The search query string                     |
+| `p`       | number | No       | The page number for pagination (default: 1) |
+
+### Response
+
+```typescript
+Array<{
+    id: string;
+    image: string;
+    title: string;
+    chapter: string;
+    chapterUrl: string;
+    author: string;
+    date: string;
+    views: string;
+}>;
+```

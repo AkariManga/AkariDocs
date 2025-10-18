@@ -53,9 +53,9 @@ function useActiveTab() {
 
 export function DocSidebar({ title }: { title: string }) {
     const [headings, setHeadings] = useState<
-        { id: string; text: string; level: number }[]
+        { id: string; text: string; level: number; element: Element }[]
     >([]);
-    const [activeId, setActiveId] = useState<string>("");
+    const [activeElement, setActiveElement] = useState<Element | null>(null);
     const activeTabId = useActiveTab();
 
     // Add a ref to track if we're manually scrolling
@@ -68,7 +68,7 @@ export function DocSidebar({ title }: { title: string }) {
             behavior: "smooth",
         });
 
-        setActiveId("");
+        setActiveElement(null);
         if (scrollTimeoutRef.current) {
             clearTimeout(scrollTimeoutRef.current);
         }
@@ -81,7 +81,7 @@ export function DocSidebar({ title }: { title: string }) {
     // Find all headings in the document when component mounts or tab changes
     useEffect(() => {
         // Reset active heading when tab changes
-        setActiveId("");
+        setActiveElement(null);
 
         const findHeadings = () => {
             // Always get all headings in the document, regardless of active tab
@@ -93,6 +93,7 @@ export function DocSidebar({ title }: { title: string }) {
                     id: el.id,
                     text: el.textContent || "",
                     level: parseInt(el.tagName.charAt(1)),
+                    element: el,
                 }));
 
             setHeadings(headingsData);
@@ -106,12 +107,22 @@ export function DocSidebar({ title }: { title: string }) {
         // Set up intersection observer to detect active heading
         const observer = new IntersectionObserver(
             (entries) => {
-                entries.forEach((entry) => {
-                    // Only update active ID if we're not in manual scroll mode
-                    if (entry.isIntersecting && !isManualScrollRef.current) {
-                        setActiveId(entry.target.id);
+                // Only update active ID if we're not in manual scroll mode
+                if (!isManualScrollRef.current) {
+                    const intersectingEntries = entries.filter(
+                        (entry) => entry.isIntersecting
+                    );
+                    if (intersectingEntries.length > 0) {
+                        const mostVisible = intersectingEntries.reduce(
+                            (prev, current) =>
+                                prev.intersectionRatio >
+                                current.intersectionRatio
+                                    ? prev
+                                    : current
+                        );
+                        setActiveElement(mostVisible.target);
                     }
-                });
+                }
             },
             { rootMargin: "0px 0px -80% 0px" }
         );
@@ -171,15 +182,18 @@ export function DocSidebar({ title }: { title: string }) {
     }, [activeTabId]);
 
     // Handle manual scroll to a heading
-    const handleScrollToHeading = (id: string) => {
+    const handleScrollToHeading = (index: number) => {
+        const heading = headings[index];
+        if (!heading) return;
+
         // Set manual scroll mode
         isManualScrollRef.current = true;
 
-        // Immediately set active ID for UX
-        setActiveId(id);
+        // Immediately set active element for UX
+        setActiveElement(heading.element);
 
         // Scroll to element
-        document.getElementById(id)?.scrollIntoView({
+        heading.element.scrollIntoView({
             behavior: "smooth",
         });
 
@@ -207,7 +221,7 @@ export function DocSidebar({ title }: { title: string }) {
                                 </h4>
                             </div>
                             <nav className="p-1">
-                                <ul className="space-y-0.5">
+                                <ul className="space-y-0.5 max-h-100 overflow-y-auto">
                                     {/* Title as top link */}
                                     <li>
                                         <a
@@ -217,12 +231,12 @@ export function DocSidebar({ title }: { title: string }) {
                                                 handleScrollToTop();
                                             }}
                                             className={`group flex items-center py-1.5 px-3 rounded-md font-medium ${
-                                                activeId === ""
+                                                activeElement === null
                                                     ? "text-positive bg-positive/5"
                                                     : "text-foreground hover:bg-muted/50"
                                             } transition-colors`}
                                         >
-                                            {activeId === "" && (
+                                            {activeElement === null && (
                                                 <div className="w-1 h-1 rounded-full bg-positive mr-2"></div>
                                             )}
                                             <span className="truncate text-sm">
@@ -238,9 +252,7 @@ export function DocSidebar({ title }: { title: string }) {
                                                 href={`#${heading.id}`}
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    handleScrollToHeading(
-                                                        heading.id
-                                                    );
+                                                    handleScrollToHeading(i);
                                                 }}
                                                 className={`group flex items-center py-1.5 px-3 rounded-md ${
                                                     heading.level === 1
@@ -249,12 +261,14 @@ export function DocSidebar({ title }: { title: string }) {
                                                         ? "ml-2"
                                                         : "ml-4"
                                                 } ${
-                                                    activeId === heading.id
+                                                    activeElement ===
+                                                    heading.element
                                                         ? "text-positive bg-positive/5"
                                                         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                                                 } transition-colors`}
                                             >
-                                                {activeId === heading.id && (
+                                                {activeElement ===
+                                                    heading.element && (
                                                     <div className="w-1 h-1 rounded-full bg-positive mr-2"></div>
                                                 )}
                                                 <span className="truncate text-sm">

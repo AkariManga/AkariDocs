@@ -13,7 +13,7 @@ This page provides an overview of available API endpoints in Akari's platform. A
   </TabList>
 
   <TabContent id="manga">
-    ## [Manga API](./v1/manga)
+    ## [Manga API](./latest/manga)
 
     Access manga content, search for titles, and browse collections.
 
@@ -21,33 +21,36 @@ This page provides an overview of available API endpoints in Akari's platform. A
     |----------|-------------|
     | `GET /manga/[id]` | Get manga details by ID |
     | `GET /manga/[id]/[subId]` | Get specific chapter/volume |
-    | `GET /manga-list/latest` | List recently updated manga |
-    | `GET /manga-list/popular` | List popular manga |
+    | `GET /manga/list/latest` | List recently updated manga |
+    | `GET /manga/list/popular` | List popular manga |
     | `GET /author/[id]` | List manga by author |
+    | `GET /author/[id]/og` | Get author open graph image |
     | `GET /genre/[id]` | Browse manga by genre |
-    | `GET /search/simple` | Search for manga titles |
+    | `GET /search` | Search for manga titles |
 
   </TabContent>
 
   <TabContent id="account">
     ## Account API
 
-    Manage user accounts, reading history, and bookmarks.
+    Manage user accounts and bookmarks.
 
     | Endpoint | Method | Description |
     |----------|--------|-------------|
-    | `/account/reading/history` | GET | Get reading history |
-    | `/account/reading/stats` | GET | Get reading statistics |
     | `/bookmarks` | GET | List all bookmarks |
     | `/bookmarks/add` | POST | Add a bookmark |
+    | `/bookmarks/all` | GET | Get all bookmarks |
+    | `/bookmarks/batch-update` | PUT | Update multiple bookmarks |
+    | `/bookmarks/bookmarked` | GET | Check if bookmarked |
     | `/bookmarks/delete` | DELETE | Remove a bookmark |
-    | `/bookmarks/isbookmarked` | GET | Check bookmark status |
+    | `/bookmarks/last-read` | GET | Get last read bookmark |
     | `/bookmarks/notification` | GET | Get bookmark notifications |
+    | `/bookmarks/search` | GET | Search bookmarks |
     | `/bookmarks/update` | PUT | Update a bookmark |
     | `/login` | GET/POST | Authenticate user |
     | `/logout` | GET | End user session |
-    | `/logout/mal` | GET | End MAL session |
     | `/register` | GET/POST | Create new account |
+    | `/captcha` | GET | Get captcha |
 
   </TabContent>
 
@@ -58,41 +61,29 @@ This page provides an overview of available API endpoints in Akari's platform. A
 
     | Endpoint | Method | Description |
     |----------|--------|-------------|
-    | `/manga/malsync/get` | GET | Get MAL sync info |
-    | `/auth/token/get` | GET | Get MAL auth token |
-    | `/auth/token/refresh` | GET | Refresh MAL token |
-    | `/auth/token` | POST | Submit auth token |
-    | `/mal/[id]` | GET | Get manga from MAL |
-    | `/mal/check-vote` | GET | Check manga rating |
     | `/mal/isLoggedIn` | GET | Check MAL login status |
+    | `/mal/logout` | GET | Logout from MAL |
     | `/mal/me` | GET | Get MAL user info |
     | `/mal/me/mangalist` | GET | Get user's MAL list |
-    | `/mal/report` | POST | Submit report to MAL |
-    | `/mal/search` | GET | Search MAL manga |
-    | `/mal/vote` | POST | Rate a manga |
+    | `/mal/sync` | GET | Sync with MAL |
+    | `/mal/token` | GET | Get MAL token |
+    | `/mal/token/refresh` | GET | Refresh MAL token |
 
   </TabContent>
 </Tabs>
 
 ## Response Format
 
-API responses follow a consistent JSON structure:
+API responses follow a consistent structure:
 
-```json
-// Success
+```typescript
 {
-  "success": true,
-  "data": { /* Response data */ },
-  "performance": {  /* Performance data */ }
-}
-
-// Error
-{
-  "success": false,
-  "error": {
-    "code": 404,
-    "message": "Not found"
-  }
+    result: "success" | "error";
+    status: number;
+    data: any | { message: string; details?: unknown };
+    performance?: {
+        [key: string]: number;
+    }
 }
 ```
 

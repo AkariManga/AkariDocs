@@ -1,7 +1,7 @@
 "use client";
 
 import { Header } from "./header";
-import { HomeIcon } from "lucide-react";
+import { HomeIcon, CodeIcon } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -31,6 +31,16 @@ export function BaseLayout({
                                 <SidebarMenuLink tooltip="Home" href="/">
                                     <HomeIcon />
                                     <span>Home</span>
+                                </SidebarMenuLink>
+                            </SidebarMenuItem>
+
+                            <SidebarMenuItem>
+                                <SidebarMenuLink
+                                    tooltip="API"
+                                    href="/api/latest"
+                                >
+                                    <CodeIcon />
+                                    <span>API</span>
                                 </SidebarMenuLink>
                             </SidebarMenuItem>
                         </SidebarMenu>
