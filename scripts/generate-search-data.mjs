@@ -161,7 +161,11 @@ async function generateSearchData() {
                 const isLast = index === keys.length - 1;
                 let branch;
                 if (index === 0) {
-                    branch = "┌";
+                    if (isLast) {
+                        branch = "└";
+                    } else {
+                        branch = "├";
+                    }
                 } else if (isLast) {
                     branch = "└";
                 } else {
