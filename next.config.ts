@@ -41,7 +41,7 @@ const nextConfig: NextConfig = {
                 headers: generateCacheHeaders(14400, 31536000),
             },
             {
-                source: "/:path(.*\\.(jpg|jpeg|png|gif|webp|svg))",
+                source: "/:path(.*\\.(?:jpg|jpeg|png|gif|webp|svg))",
                 headers: generateCacheHeaders(
                     31536000,
                     63072000,
